@@ -75,3 +75,8 @@ public class Main {
         }
     }
 }
+
+// Need to add validator
+// Clear spec symbols and spaces in name
+// Add list of subscriptions and specializations
+// Add registration on a phone number
