@@ -14,6 +14,6 @@ class Coach extends Person{
 
     @Override
     public String showInfo() {
-        return "Тренер: " + name + ", Спеціалізація: " + specialization;
+        return "Coach: " + name + ", Specialization: " + specialization;
     }
 }
