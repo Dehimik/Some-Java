@@ -1,6 +1,6 @@
 package com.dehimik.models;
 
-import com.dehimik.Person;
+import com.dehimik.models.Person;
 
 public class Client extends Person {
     private String subscription;
