@@ -73,7 +73,7 @@ public class FitnessCenterSwing extends JFrame {
     }
 
     private void addClient() {
-        String name = clientNameField.getText();
+        String name = clientNameField.getText().trim().replaceAll("\\s+", " ");
         String subscription = clientSubscriptionField.getText();
         if (!name.isEmpty() && !subscription.isEmpty()) {
             fitnessCenter.addClient(new Client(name, subscription));
@@ -86,7 +86,7 @@ public class FitnessCenterSwing extends JFrame {
     }
 
     private void addCoach() {
-        String name = coachNameField.getText();
+        String name = coachNameField.getText().trim().replaceAll("\\s+", " ");
         String specialization = coachSpecializationField.getText();
         if (!name.isEmpty() && !specialization.isEmpty()) {
             fitnessCenter.addCoach(new Coach(name, specialization));
