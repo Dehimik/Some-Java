@@ -77,16 +77,16 @@ public class FitnessCenterSwing extends JFrame {
     }
 
     private void addClient() {
-        String name = clientNameField.getText().trim().replaceAll("\\s+", " ");
-        String subscription = clientSubscriptionField.getText();
-        if (!name.isEmpty() && !subscription.isEmpty()) {
-            fitnessCenter.addClient(new Client(name, subscription));
-            displayArea.setText("Client  " + name + " added.");
-            clientNameField.setText("");
-            clientSubscriptionField.setText("");
-        } else {
-            displayArea.setText("Error: Enter name and subscription.");
-        }
+        //String name = clientNameField.getText().trim().replaceAll("\\s+", " ");
+       // String subscription = clientSubscriptionField.getText();
+        //if (!name.isEmpty() && !subscription.isEmpty()) {
+        //    fitnessCenter.addClient(new Client(name, subscription), price);
+        //    displayArea.setText("Client  " + name + " added.");
+        //    clientNameField.setText("");
+        //    clientSubscriptionField.setText("");
+       // } else {
+       //     displayArea.setText("Error: Enter name and subscription.");
+      //  }
     }
 
     private void addCoach() {

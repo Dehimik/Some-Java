@@ -1,23 +1,50 @@
 package com.dehimik.models;
 
+import com.dehimik.enumes.Specialization;
+import com.dehimik.utils.FinanceManager;
+
 import java.io.*;
+import java.time.LocalDateTime;
 import java.util.*;
 
 public class Fitness_center {
     private List<Client> clients;
     private List<Coach> coaches;
+    private List<Session> sessions;
+    private FinanceManager financeManager;
+
+    private static final String CLIENTS_FILE = "clients.json";
+    private static final String COACHES_FILE = "coaches.json";
+    private static final String SESSIONS_FILE = "sessions.json";
 
     public Fitness_center() {
         this.clients = new ArrayList<>();
         this.coaches = new ArrayList<>();
+        this.sessions = new ArrayList<>();
+        this.financeManager = new FinanceManager();
     }
 
-    public void addClient(Client client) {
+    public void addClient(Client client, double price) {
         clients.add(client);
+        financeManager.sellSubscription(client.getSubscription(), price);
     }
 
     public void addCoach(Coach coach) {
         coaches.add(coach);
+    }
+
+    public void addSession(Coach coach, List<Client> clients, Specialization specialization, LocalDateTime dateTime) {
+        sessions.add(new Session(coach, clients, specialization, dateTime));
+    }
+
+    public String showAllSessions() {
+        if (sessions.isEmpty()) return "Немає запланованих занять.";
+
+        StringBuilder result = new StringBuilder("\nСписок занять:\n");
+        for (Session session : sessions) {
+            result.append(session.showInfo()).append("\n");
+        }
+        return result.toString();
     }
 
     public String showAllClients() {

@@ -1,5 +1,6 @@
 package com.dehimik;
 
+import com.dehimik.enumes.SubscriptionType;
 import com.dehimik.utils.InputValidator;
 import com.dehimik.models.Client;
 import com.dehimik.models.Coach;
@@ -31,46 +32,44 @@ public class Main {
 
                 switch (choice) {
                     case 1:
-                        System.out.print("Enter client name: ");
-                        String clientName = InputValidator.cleanName(scanner.nextLine());
-                        System.out.print("Enter subscription: ");
-                        String subscription = scanner.nextLine();
-                        fitnessCenter.addClient(new Client(clientName, subscription));
-                        System.out.println("Client successfully added.");
+                        addClient(fitnessCenter, scanner);
                         break;
 
                     case 2:
-                        System.out.print("Enter coach name: ");
-                        String trainerName = InputValidator.cleanName(scanner.nextLine());
-                        System.out.print("Enter coach specialization: ");
-                        String specialization = scanner.nextLine();
-                        fitnessCenter.addCoach(new Coach(trainerName, specialization));
-                        System.out.println("Coach successfully added.");
+                        addCoach(fitnessCenter, scanner);
                         break;
 
                     case 3:
-                        System.out.println(fitnessCenter.showAllClients());
+                        addSession(fitnessCenter, scanner);
                         break;
 
                     case 4:
-                        System.out.println(fitnessCenter.showAllCoaches());
+                        System.out.println(fitnessCenter.showAllClients());
                         break;
 
                     case 5:
+                        System.out.println(fitnessCenter.showAllCoaches());
+                        break;
+
+                    case 6:
+                        System.out.println(fitnessCenter.showAllSessions());
+                        break;
+
+                    case 7:
                         System.out.print("Enter client name to search: ");
                         String searchName = scanner.nextLine();
                         System.out.println(fitnessCenter.searchClient(searchName));
                         break;
 
-                    case 6:
+                    case 8:
                         fitnessCenter.saveData(fileName);
                         break;
 
-                    case 7:
+                    case 9:
                         fitnessCenter.loadData(fileName);
                         break;
 
-                    case 8:
+                    case 10:
                         System.out.println("Exit...");
                         scanner.close();
                         return;
@@ -83,6 +82,32 @@ public class Main {
                 scanner.nextLine();
             }
         }
+    }
+    private static void addClient(Fitness_center fitnessCenter, Scanner scanner){
+        System.out.print("Enter client name: ");
+        String name = InputValidator.cleanName(scanner.nextLine());
+
+        SubscriptionType.printOptions();
+        System.out.print("Choose subscription number: ");
+        int subChoice = scanner.nextInt();
+        scanner.nextLine();
+        SubscriptionType subscription = SubscriptionType.fromUserChoice(subChoice);
+
+        if (subscription != null) {
+            System.out.print("Enter subscription price: ");
+            double price = scanner.nextDouble();
+            scanner.nextLine();
+            fitnessCenter.addClient(new Client(name, subscription), price);
+            System.out.println("Client " + name + " added.");
+        } else {
+            System.out.println("Error: Incorrect subscription.");
+        }
+    }
+    private static void addCoach(Fitness_center fitnessCenter, Scanner scanner){
+
+    }
+    private static void addSession(Fitness_center fitnessCenter, Scanner scanner){
+
     }
 }
 
