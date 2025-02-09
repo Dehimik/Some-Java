@@ -1,4 +1,4 @@
-package com.dehimik;
+package com.dehimik.models;
 
 import java.io.Serializable;
 

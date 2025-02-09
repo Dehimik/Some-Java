@@ -1,4 +1,4 @@
-package com.dehimik;
+package com.dehimik.utils;
 
 public class InputValidator {
     public static String cleanName(String name) {

@@ -1,6 +1,8 @@
-package com.dehimik;
+package com.dehimik.models;
 
-class Client extends Person{
+import com.dehimik.Person;
+
+public class Client extends Person {
     private String subscription;
 
     public Client(String name, String subscription) {

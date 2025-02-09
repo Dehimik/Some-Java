@@ -1,4 +1,8 @@
 package com.dehimik;
+import com.dehimik.models.Client;
+import com.dehimik.models.Coach;
+import com.dehimik.models.Fitness_center;
+
 import javax.swing.*;
 import java.awt.*;
 

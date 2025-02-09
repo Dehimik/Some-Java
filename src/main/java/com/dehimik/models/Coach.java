@@ -1,6 +1,8 @@
-package com.dehimik;
+package com.dehimik.models;
 
-class Coach extends Person{
+import com.dehimik.Person;
+
+public class Coach extends Person {
     private String specialization;
 
     public Coach(String name, String specialization) {

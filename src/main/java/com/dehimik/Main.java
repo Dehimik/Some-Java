@@ -1,5 +1,10 @@
 package com.dehimik;
 
+import com.dehimik.utils.InputValidator;
+import com.dehimik.models.Client;
+import com.dehimik.models.Coach;
+import com.dehimik.models.Fitness_center;
+
 import java.util.Scanner;
 
 public class Main {
