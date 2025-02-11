@@ -97,11 +97,22 @@ public class FitnessCenterSwing extends JFrame {
             clientNameField.setText("");
             subscriptionBox.setSelectedIndex(0);
         } else {
-            displayArea.setText("Error: Enter name and choose an subscription.");
+            displayArea.setText("Error: Enter name and choose a subscription.");
         }
     }
 
     private void addCoach() {
+        String name = InputValidator.cleanName(coachNameField.getText());
+        Specialization spec = (Specialization) specializationBox.getSelectedItem();
+
+        if(!name.isEmpty() && spec != null){
+            fitnessCenter.addCoach(new Coach(name, spec));
+            displayArea.setText("Coach " + name + " added with specialization " + spec.getDescription());
+            coachNameField.setText("");
+            specializationBox.setSelectedIndex(0);
+        } else {
+            displayArea.setText("Error: Enter name and choose a specialization.");
+        }
     }
 
     private void addSession(){
