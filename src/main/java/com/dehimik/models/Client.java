@@ -17,6 +17,6 @@ public class Client extends Person {
 
     @Override
     public String showInfo() {
-        return "Client: " + name + ", Subscription: " + subscription;
+        return "Client: " + name + ", Subscription: " + subscription.getDescription() + " $" + subscription.getPrice();
     }
 }

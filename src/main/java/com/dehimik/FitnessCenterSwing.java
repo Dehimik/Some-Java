@@ -1,7 +1,10 @@
 package com.dehimik;
+import com.dehimik.enumes.Specialization;
+import com.dehimik.enumes.SubscriptionType;
 import com.dehimik.models.Client;
 import com.dehimik.models.Coach;
 import com.dehimik.models.Fitness_center;
+import com.dehimik.utils.InputValidator;
 
 import javax.swing.*;
 import java.awt.*;
@@ -9,32 +12,38 @@ import java.awt.*;
 public class FitnessCenterSwing extends JFrame {
     private Fitness_center fitnessCenter;
     private JTextArea displayArea;
-    private JTextField clientNameField, clientSubscriptionField;
-    private JTextField coachNameField, coachSpecializationField;
+    private JTextField clientNameField;
+    private JTextField coachNameField;
     private JTextField searchField;
+    private JComboBox<SubscriptionType> subscriptionBox;
+    private JComboBox<Specialization> specializationBox;
     private static final String FILE_NAME = "fitness_data.ser";
 
     public FitnessCenterSwing() {
         fitnessCenter = new Fitness_center();
 
         setTitle("Fitness center");
-        setSize(500, 500);
+        setSize(900, 400);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLayout(new BorderLayout());
 
         JPanel topPanel = new JPanel();
         JButton addClientButton = new JButton("Add client");
         JButton addCoachButton = new JButton("Add coach");
+        JButton addSessionButton = new JButton("Add session");
         JButton showClientsButton = new JButton("Clients list");
         JButton showCoachesButton = new JButton("Coaches list");
+        JButton showSessionButton = new JButton("Sessions list");
         JButton saveButton = new JButton("Save");
         JButton loadButton = new JButton("Load");
         JButton searchButton = new JButton("Search client");
 
         topPanel.add(addClientButton);
         topPanel.add(addCoachButton);
+        topPanel.add(addSessionButton);
         topPanel.add(showClientsButton);
         topPanel.add(showCoachesButton);
+        topPanel.add(showSessionButton);
         topPanel.add(saveButton);
         topPanel.add(loadButton);
         topPanel.add(searchButton);
@@ -49,19 +58,19 @@ public class FitnessCenterSwing extends JFrame {
         inputPanel.setLayout(new GridLayout(3, 2));
 
         clientNameField = new JTextField();
-        clientSubscriptionField = new JTextField();
         coachNameField = new JTextField();
-        coachSpecializationField = new JTextField();
         searchField = new JTextField();
+        subscriptionBox = new JComboBox<>(SubscriptionType.values());
+        specializationBox = new JComboBox<>(Specialization.values());
 
         inputPanel.add(new JLabel("Client name:"));
         inputPanel.add(clientNameField);
         inputPanel.add(new JLabel("Subscription:"));
-        inputPanel.add(clientSubscriptionField);
+        inputPanel.add(subscriptionBox);
         inputPanel.add(new JLabel("Coach name:"));
         inputPanel.add(coachNameField);
         inputPanel.add(new JLabel("Specialization:"));
-        inputPanel.add(coachSpecializationField);
+        inputPanel.add(specializationBox);
         inputPanel.add(new JLabel("Search client:"));
         inputPanel.add(searchField);
 
@@ -69,6 +78,7 @@ public class FitnessCenterSwing extends JFrame {
 
         addClientButton.addActionListener(e -> addClient());
         addCoachButton.addActionListener(e -> addCoach());
+        addSessionButton.addActionListener(e -> addSession());
         showClientsButton.addActionListener(e -> displayArea.setText(fitnessCenter.showAllClients()));
         showCoachesButton.addActionListener(e -> displayArea.setText(fitnessCenter.showAllCoaches()));
         saveButton.addActionListener(e -> fitnessCenter.saveData(FILE_NAME));
@@ -77,29 +87,25 @@ public class FitnessCenterSwing extends JFrame {
     }
 
     private void addClient() {
-        //String name = clientNameField.getText().trim().replaceAll("\\s+", " ");
-       // String subscription = clientSubscriptionField.getText();
-        //if (!name.isEmpty() && !subscription.isEmpty()) {
-        //    fitnessCenter.addClient(new Client(name, subscription), price);
-        //    displayArea.setText("Client  " + name + " added.");
-        //    clientNameField.setText("");
-        //    clientSubscriptionField.setText("");
-       // } else {
-       //     displayArea.setText("Error: Enter name and subscription.");
-      //  }
+        String name = InputValidator.cleanName(clientNameField.getText());
+        SubscriptionType subscription = (SubscriptionType) subscriptionBox.getSelectedItem();
+
+        if (!name.isEmpty() && subscription != null) {
+            fitnessCenter.addClient(new Client(name, subscription));
+            displayArea.setText("Client " + name + " added with subscription " + subscription.getDescription() +
+                    " ($" + subscription.getPrice() + ")");
+            clientNameField.setText("");
+            subscriptionBox.setSelectedIndex(0);
+        } else {
+            displayArea.setText("Error: Enter name and choose an subscription.");
+        }
     }
 
     private void addCoach() {
-       // String name = coachNameField.getText().trim().replaceAll("\\s+", " ");
-        //String specialization = coachSpecializationField.getText();
-       // if (!name.isEmpty() && !specialization.isEmpty()) {
-         //   fitnessCenter.addCoach(new Coach(name, specialization));
-         //  displayArea.setText("Coach " + name + " added.");
-          //  coachNameField.setText("");
-          //  coachSpecializationField.setText("");
-      //  } else {
-       //     displayArea.setText("Error: Enter name and specialization.");
-//      }
+    }
+
+    private void addSession(){
+
     }
 
     private void searchClient() {
