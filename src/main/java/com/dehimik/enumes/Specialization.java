@@ -2,10 +2,10 @@ package com.dehimik.enumes;
 
 public enum Specialization {
     FITNESS("Fitness"),
-    YOGA("Йога"),
-    BOXING("Бокс"),
-    CROSSFIT("Кросфіт"),
-    BODYBUILDING("Бодібілдинг");
+    YOGA("Yoga"),
+    BOXING("Boxing"),
+    CROSSFIT("Crossfit"),
+    BODYBUILDING("Body Building");
 
     private final String description;
 
@@ -15,7 +15,6 @@ public enum Specialization {
 
     public String getDescription() {
         return description;
-        
     }
 
     public static Specialization fromUserChoice(int choice) {
@@ -23,11 +22,11 @@ public enum Specialization {
         if (choice >= 1 && choice <= values.length) {
             return values[choice - 1];
         }
-        return null; // Некоректний вибір
+        return null;
     }
 
     public static void printOptions() {
-        System.out.println("Оберіть спеціалізацію тренера:");
+        System.out.println("Choose coach specialization:");
         for (int i = 0; i < Specialization.values().length; i++) {
             System.out.println((i + 1) + ". " + Specialization.values()[i].getDescription());
         }

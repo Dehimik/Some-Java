@@ -7,18 +7,18 @@ import java.util.Map;
 
 public class FinanceManager {
     private Map<SubscriptionType, Integer> soldSubscriptions;
-    private double totalRevenue;
+    private int totalRevenue;
     private double totalEquipmentExpenses;
 
     public FinanceManager() {
         this.soldSubscriptions = new HashMap<>();
-        this.totalRevenue = 0.0;
+        this.totalRevenue = 0;
         this.totalEquipmentExpenses = 0.0;
     }
 
-    public void sellSubscription(SubscriptionType type, double price) {
+    public void sellSubscription(SubscriptionType type) {
         soldSubscriptions.put(type, soldSubscriptions.getOrDefault(type, 0) + 1);
-        totalRevenue += price;
+        totalRevenue += type.getPrice();
     }
 
     public void addEquipmentExpense(double amount) {

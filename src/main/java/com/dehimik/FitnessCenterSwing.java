@@ -90,16 +90,16 @@ public class FitnessCenterSwing extends JFrame {
     }
 
     private void addCoach() {
-        String name = coachNameField.getText().trim().replaceAll("\\s+", " ");
-        String specialization = coachSpecializationField.getText();
-        if (!name.isEmpty() && !specialization.isEmpty()) {
-            fitnessCenter.addCoach(new Coach(name, specialization));
-            displayArea.setText("Coach " + name + " added.");
-            coachNameField.setText("");
-            coachSpecializationField.setText("");
-        } else {
-            displayArea.setText("Error: Enter name and specialization.");
-        }
+       // String name = coachNameField.getText().trim().replaceAll("\\s+", " ");
+        //String specialization = coachSpecializationField.getText();
+       // if (!name.isEmpty() && !specialization.isEmpty()) {
+         //   fitnessCenter.addCoach(new Coach(name, specialization));
+         //  displayArea.setText("Coach " + name + " added.");
+          //  coachNameField.setText("");
+          //  coachSpecializationField.setText("");
+      //  } else {
+       //     displayArea.setText("Error: Enter name and specialization.");
+//      }
     }
 
     private void searchClient() {

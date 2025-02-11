@@ -24,9 +24,9 @@ public class Fitness_center {
         this.financeManager = new FinanceManager();
     }
 
-    public void addClient(Client client, double price) {
+    public void addClient(Client client) {
         clients.add(client);
-        financeManager.sellSubscription(client.getSubscription(), price);
+        financeManager.sellSubscription(client.getSubscription());
     }
 
     public void addCoach(Coach coach) {
@@ -37,10 +37,18 @@ public class Fitness_center {
         sessions.add(new Session(coach, clients, specialization, dateTime));
     }
 
-    public String showAllSessions() {
-        if (sessions.isEmpty()) return "Немає запланованих занять.";
+    public List<Client> getClients(){
+        return clients;
+    }
 
-        StringBuilder result = new StringBuilder("\nСписок занять:\n");
+    public List<Coach> getCoaches(){
+        return coaches;
+    }
+
+    public String showAllSessions() {
+        if (sessions.isEmpty()) return "There are no sessions.";
+
+        StringBuilder result = new StringBuilder("\nSessions list:\n");
         for (Session session : sessions) {
             result.append(session.showInfo()).append("\n");
         }

@@ -1,16 +1,17 @@
 package com.dehimik.models;
 
+import com.dehimik.enumes.Specialization;
 import com.dehimik.models.Person;
 
 public class Coach extends Person {
-    private String specialization;
+    private Specialization specialization;
 
-    public Coach(String name, String specialization) {
+    public Coach(String name, Specialization specialization) {
         super(name);
         this.specialization = specialization;
     }
 
-    public String getSpecialization() {
+    public Specialization getSpecialization() {
         return specialization;
     }
 
