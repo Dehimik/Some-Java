@@ -82,6 +82,7 @@ public class FitnessCenterSwing extends JFrame {
         addSessionButton.addActionListener(e -> new AddSession(this, fitnessCenter));
         showClientsButton.addActionListener(e -> displayArea.setText(fitnessCenter.showAllClients()));
         showCoachesButton.addActionListener(e -> displayArea.setText(fitnessCenter.showAllCoaches()));
+        showSessionButton.addActionListener(e -> displayArea.setText(fitnessCenter.showAllSessions()));
         saveButton.addActionListener(e -> fitnessCenter.saveData(FILE_NAME));
         loadButton.addActionListener(e -> fitnessCenter.loadData(FILE_NAME));
         searchButton.addActionListener(e -> searchClient());
