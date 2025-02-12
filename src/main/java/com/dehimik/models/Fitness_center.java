@@ -16,6 +16,8 @@ public class Fitness_center {
     private static final String CLIENTS_FILE = "clients.json";
     private static final String COACHES_FILE = "coaches.json";
     private static final String SESSIONS_FILE = "sessions.json";
+    private static final String EQUIPMENTS_FILE = "sessions.json";
+    private static final String FINANCE_FILE = "sessions.json";
 
     public Fitness_center() {
         this.clients = new ArrayList<>();
@@ -35,6 +37,10 @@ public class Fitness_center {
 
     public void addSession(Coach coach, List<Client> clients, Specialization specialization, LocalDateTime dateTime) {
         sessions.add(new Session(coach, clients, specialization, dateTime));
+    }
+
+    public void addSession(Session session){
+        sessions.add(session);
     }
 
     public List<Client> getClients(){

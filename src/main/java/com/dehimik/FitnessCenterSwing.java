@@ -4,6 +4,7 @@ import com.dehimik.enumes.SubscriptionType;
 import com.dehimik.models.Client;
 import com.dehimik.models.Coach;
 import com.dehimik.models.Fitness_center;
+import com.dehimik.ui.AddSession;
 import com.dehimik.utils.InputValidator;
 
 import javax.swing.*;
@@ -78,7 +79,7 @@ public class FitnessCenterSwing extends JFrame {
 
         addClientButton.addActionListener(e -> addClient());
         addCoachButton.addActionListener(e -> addCoach());
-        addSessionButton.addActionListener(e -> addSession());
+        addSessionButton.addActionListener(e -> new AddSession(this, fitnessCenter));
         showClientsButton.addActionListener(e -> displayArea.setText(fitnessCenter.showAllClients()));
         showCoachesButton.addActionListener(e -> displayArea.setText(fitnessCenter.showAllCoaches()));
         saveButton.addActionListener(e -> fitnessCenter.saveData(FILE_NAME));

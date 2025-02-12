@@ -26,16 +26,16 @@ public class FinanceManager {
     }
 
     public String getFinanceReport() {
-        StringBuilder report = new StringBuilder("Фінансовий звіт:\n");
-        report.append("Доходи від абонементів:\n");
+        StringBuilder report = new StringBuilder("Financial statement:\n");
+        report.append("Incomes from clients:\n");
         for (Map.Entry<SubscriptionType, Integer> entry : soldSubscriptions.entrySet()) {
             report.append(entry.getKey().getDescription())
                     .append(": ")
                     .append(entry.getValue())
-                    .append(" продано\n");
+                    .append(" sold out\n");
         }
-        report.append("Загальний дохід: ").append(totalRevenue).append(" грн\n");
-        report.append("Загальні витрати на обладнання: ").append(totalEquipmentExpenses).append(" грн\n");
+        report.append("Total income: ").append(totalRevenue).append(" грн\n");
+        report.append("Total equipment expenses: ").append(totalEquipmentExpenses).append(" грн\n");
 
         return report.toString();
     }
