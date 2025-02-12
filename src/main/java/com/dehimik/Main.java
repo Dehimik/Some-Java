@@ -17,25 +17,26 @@ public class Main {
     public static void main(String[] args) {
         Fitness_center fitnessCenter = new Fitness_center();
         Scanner scanner = new Scanner(System.in);
-        String fileName = "fitness_data.ser";
 
         while (true) {
             System.out.println("\nMenu:");
             System.out.println("1. Add client");
             System.out.println("2. Add coach");
             System.out.println("3. Add session");
-            System.out.println("4. Show all clients");
-            System.out.println("5. Show all coaches");
-            System.out.println("6. Show all sessions");
-            System.out.println("7. Search client");
-            System.out.println("8. Save to file");
-            System.out.println("9. Load from file");
-            System.out.println("10. Exit");
+            System.out.println("4. Add equipment");
+            System.out.println("5. Show all clients");
+            System.out.println("6. Show all coaches");
+            System.out.println("7. Show all sessions");
+            System.out.println("8. Search client");
+            System.out.println("9. Save to file");
+            System.out.println("10. Load from file");
+            System.out.println("11. Show finance report");
+            System.out.println("0. Exit");
             System.out.print("Your choice: ");
 
             try {
                 int choice = scanner.nextInt();
-                scanner.nextLine();// Очищення буфера після nextInt()
+                scanner.nextLine();
 
                 switch (choice) {
                     case 1:
@@ -51,32 +52,40 @@ public class Main {
                         break;
 
                     case 4:
-                        System.out.println(fitnessCenter.showAllClients());
+                        addEquipment(fitnessCenter, scanner);
                         break;
 
                     case 5:
-                        System.out.println(fitnessCenter.showAllCoaches());
+                        System.out.println(fitnessCenter.showAllClients());
                         break;
 
                     case 6:
-                        System.out.println(fitnessCenter.showAllSessions());
+                        System.out.println(fitnessCenter.showAllCoaches());
                         break;
 
                     case 7:
+                        System.out.println(fitnessCenter.showAllSessions());
+                        break;
+
+                    case 8:
                         System.out.print("Enter client name to search: ");
                         String searchName = scanner.nextLine();
                         System.out.println(fitnessCenter.searchClient(searchName));
                         break;
 
-                    case 8:
-                        fitnessCenter.saveData(fileName);
-                        break;
-
                     case 9:
-                        fitnessCenter.loadData(fileName);
+                        fitnessCenter.saveClients();
                         break;
 
                     case 10:
+                        fitnessCenter.loadClients();
+                        break;
+
+                    case 11:
+                        System.out.println(fitnessCenter.showFinanceReport());
+                        break;
+
+                    case 0:
                         System.out.println("Exit...");
                         scanner.close();
                         return;
@@ -114,7 +123,7 @@ public class Main {
         Specialization.printOptions();
         System.out.print("Choose specialization number: ");
         int specChoice = scanner.nextInt();
-        scanner.nextLine(); // Очистка буфера
+        scanner.nextLine();
         Specialization specialization = Specialization.fromUserChoice(specChoice);
 
         if (specialization != null) {
@@ -165,9 +174,20 @@ public class Main {
         fitnessCenter.addSession(coach, sessionClients, specialization, dateTime);
         System.out.println("Session successfully added!");
     }
-}
 
-// Need to add validator
-// Clear spec symbols and spaces in name
-// Add list of subscriptions and specializations
+    public static void addEquipment(Fitness_center fitnessCenter, Scanner scanner){
+        System.out.print("Enter name of equipment: ");
+        String name = scanner.nextLine();
+
+        System.out.print("Enter price for 1: ");
+        int price = scanner.nextInt();
+
+        System.out.print("Enter quantity: ");
+        int quantity = scanner.nextInt();
+        scanner.nextLine();
+
+        fitnessCenter.addEquipment(name, price, quantity);
+        System.out.println("Equipment successfully added!");
+    }
+}
 // Add registration on a phone number

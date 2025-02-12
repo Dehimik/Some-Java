@@ -6,6 +6,8 @@ import com.dehimik.models.Person;
 public class Client extends Person {
     private SubscriptionType subscription;
 
+    public Client() { }
+
     public Client(String name, SubscriptionType subscription) {
         super(name);
         this.subscription = subscription;

@@ -1,0 +1,13 @@
+[ {
+  "name" : "Vlad",
+  "subscription" : "STANDARD"
+}, {
+  "name" : "Vadim",
+  "subscription" : "STANDARD"
+}, {
+  "name" : "Ilona",
+  "subscription" : "PREMIUM"
+}, {
+  "name" : "Vova",
+  "subscription" : "BASIC"
+} ]

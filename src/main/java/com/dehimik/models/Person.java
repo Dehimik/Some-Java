@@ -5,6 +5,8 @@ import java.io.Serializable;
 abstract class Person implements Serializable {
     protected String name;
 
+    public Person() { }
+
     public Person(String name) {
         this.name = name;
     }

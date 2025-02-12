@@ -1,19 +1,24 @@
 package com.dehimik.utils;
 
 import com.dehimik.enumes.SubscriptionType;
+import com.dehimik.models.Equipment;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class FinanceManager {
+    private List<Equipment> equipmentList;
     private Map<SubscriptionType, Integer> soldSubscriptions;
     private int totalRevenue;
-    private double totalEquipmentExpenses;
+    private int totalExpenses;
 
     public FinanceManager() {
         this.soldSubscriptions = new HashMap<>();
+        this.equipmentList = new ArrayList<>();
         this.totalRevenue = 0;
-        this.totalEquipmentExpenses = 0.0;
+        this.totalExpenses = 0;
     }
 
     public void sellSubscription(SubscriptionType type) {
@@ -21,21 +26,34 @@ public class FinanceManager {
         totalRevenue += type.getPrice();
     }
 
-    public void addEquipmentExpense(double amount) {
-        totalEquipmentExpenses += amount;
+    public void addEquipment(Equipment equipment) {
+        equipmentList.add(equipment);
+        totalExpenses += equipment.getTotalCost();
+    }
+
+    public int getNetProfit() {
+        return totalRevenue - totalExpenses;
     }
 
     public String getFinanceReport() {
-        StringBuilder report = new StringBuilder("Financial statement:\n");
-        report.append("Incomes from clients:\n");
+        StringBuilder report = new StringBuilder("Finance report:\n");
+
+        report.append("\nIncomes from clients:\n");
         for (Map.Entry<SubscriptionType, Integer> entry : soldSubscriptions.entrySet()) {
             report.append(entry.getKey().getDescription())
                     .append(": ")
                     .append(entry.getValue())
-                    .append(" sold out\n");
+                    .append(" Sold ($" + (entry.getValue() * entry.getKey().getPrice()) + ")\n");
         }
-        report.append("Total income: ").append(totalRevenue).append(" грн\n");
-        report.append("Total equipment expenses: ").append(totalEquipmentExpenses).append(" грн\n");
+
+        report.append("\nEquipment costs:\n");
+        for (Equipment e : equipmentList) {
+            report.append("- ").append(e).append("\n");
+        }
+
+        report.append("\nTotal income: $").append(totalRevenue).append("\n");
+        report.append("\nTotal expenses: $").append(totalExpenses).append("\n");
+        report.append("\nNet profit: $").append(getNetProfit()).append("\n");
 
         return report.toString();
     }

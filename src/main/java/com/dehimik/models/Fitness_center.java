@@ -1,8 +1,9 @@
 package com.dehimik.models;
 
-import com.dehimik.enumes.Specialization;
-import com.dehimik.utils.FinanceManager;
-
+import com.dehimik.enumes.*;
+import com.dehimik.utils.*;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
 import java.io.*;
 import java.time.LocalDateTime;
 import java.util.*;
@@ -37,6 +38,11 @@ public class Fitness_center {
 
     public void addSession(Coach coach, List<Client> clients, Specialization specialization, LocalDateTime dateTime) {
         sessions.add(new Session(coach, clients, specialization, dateTime));
+    }
+
+    public void addEquipment(String name, int price, int quantity) {
+        Equipment equipment = new Equipment(name, price, quantity);
+        financeManager.addEquipment(equipment);
     }
 
     public void addSession(Session session){
@@ -90,23 +96,57 @@ public class Fitness_center {
         return "No client.";
     }
 
-    public void saveData(String fileName) {
-        try (ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(fileName))) {
-            out.writeObject(clients);
-            out.writeObject(coaches);
-            System.out.println("Data successfully saved to file.");
-        } catch (IOException e) {
-            e.printStackTrace();
+    public String showFinanceReport() {
+        return financeManager.getFinanceReport();
+    }
+
+    public void saveClients() {
+        saveToJson(CLIENTS_FILE, clients);
+    }
+
+    public void loadClients(){
+        clients = loadFromJson(CLIENTS_FILE, Client.class);
+        for(Client client : clients){
+            financeManager.sellSubscription(client.getSubscription());
         }
     }
 
-    public void loadData(String fileName) {
-        try (ObjectInputStream in = new ObjectInputStream(new FileInputStream(fileName))) {
-            clients = (List<Client>) in.readObject();
-            coaches = (List<Coach>) in.readObject();
-            System.out.println("Data successfully loaded.");
-        } catch (IOException | ClassNotFoundException e) {
-            e.printStackTrace();
+    public void saveCoaches(){
+        saveToJson(COACHES_FILE, coaches);
+    }
+
+    public void loadCoaches(){
+        coaches = loadFromJson(COACHES_FILE, Coach.class);
+    }
+
+    public void saveSessions() {
+        saveToJson(SESSIONS_FILE, sessions);
+    }
+
+    public void loadSessions() {
+        sessions = loadFromJson(SESSIONS_FILE, Session.class);
+    }
+
+    private <T> void saveToJson(String fileName, List<T> list) {
+        ObjectMapper mapper = new ObjectMapper().enable(SerializationFeature.INDENT_OUTPUT);
+        try {
+            mapper.writeValue(new File(fileName), list);
+            System.out.println("Session saved to file:  " + fileName);
+        } catch (IOException e) {
+            System.err.println("Error with save to file: " + fileName + ": " + e.getMessage());
+        }
+    }
+    private <T> List<T> loadFromJson(String fileName, Class<T> clazz) {
+        ObjectMapper mapper = new ObjectMapper();
+        try {
+            File file = new File(fileName);
+            if (!file.exists()) {
+                return new ArrayList<>();
+            }
+            return mapper.readValue(file, mapper.getTypeFactory().constructCollectionType(List.class, clazz));
+        } catch (IOException e) {
+            System.err.println("Error to load file: " + fileName + ": " + e.getMessage());
+            return new ArrayList<>();
         }
     }
 }

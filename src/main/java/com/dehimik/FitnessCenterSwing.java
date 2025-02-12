@@ -18,7 +18,6 @@ public class FitnessCenterSwing extends JFrame {
     private JTextField searchField;
     private JComboBox<SubscriptionType> subscriptionBox;
     private JComboBox<Specialization> specializationBox;
-    private static final String FILE_NAME = "fitness_data.ser";
 
     public FitnessCenterSwing() {
         fitnessCenter = new Fitness_center();
@@ -83,8 +82,8 @@ public class FitnessCenterSwing extends JFrame {
         showClientsButton.addActionListener(e -> displayArea.setText(fitnessCenter.showAllClients()));
         showCoachesButton.addActionListener(e -> displayArea.setText(fitnessCenter.showAllCoaches()));
         showSessionButton.addActionListener(e -> displayArea.setText(fitnessCenter.showAllSessions()));
-        saveButton.addActionListener(e -> fitnessCenter.saveData(FILE_NAME));
-        loadButton.addActionListener(e -> fitnessCenter.loadData(FILE_NAME));
+        saveButton.addActionListener(e -> fitnessCenter.saveSessions());
+        loadButton.addActionListener(e -> fitnessCenter.saveSessions());
         searchButton.addActionListener(e -> searchClient());
     }
 

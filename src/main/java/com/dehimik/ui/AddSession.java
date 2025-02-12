@@ -11,7 +11,7 @@ import com.dehimik.models.*;
 import com.dehimik.enumes.*;
 
 public class AddSession extends JDialog {
-    private JComboBox<Coach> coachBox;
+    private JComboBox<Coach>coachBox;
     private JList<Client> clientList;
     private JComboBox<Specialization> specializationBox;
     private JTextField dateTimeField;
