@@ -2,7 +2,9 @@ package com.dehimik.models;
 
 import com.dehimik.enumes.Specialization;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 
@@ -19,19 +21,27 @@ import java.util.stream.Collectors;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Session implements Serializable {
     private Coach coach;
-    private List<Client> clients;
+    private List<Client> clients = new ArrayList<>();
     private Specialization specialization;
 
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd.MM.yyyy HH:mm")
+    @JsonProperty("dateTime")
+    private String dateTimeString;
+
+    @JsonIgnore
     private LocalDateTime dateTime;
 
-    public Session() {}
+    private static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm");
+
+    public Session() {
+         this.clients = new ArrayList<>();
+    }
 
     public Session(Coach coach, List<Client> clients, Specialization specialization, LocalDateTime dateTime) {
         this.coach = coach;
-        this.clients = clients;
+        this.clients = (clients != null) ? clients : new ArrayList<>();
         this.specialization = specialization;
         this.dateTime = dateTime;
+        this.dateTimeString = dateTime.format(FORMATTER);
     }
 
     public Coach getCoach() {
@@ -39,7 +49,7 @@ public class Session implements Serializable {
     }
 
     public String getClientsNames() {
-        if (clients.isEmpty()) {
+        if (clients == null || clients.isEmpty()) {
             return "No clients";
         }
         return clients.stream()
@@ -54,6 +64,18 @@ public class Session implements Serializable {
     public String getFormattedDateTime() {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm");
         return dateTime.format(formatter);
+    }
+
+    public String getFormattedDate() {
+        return dateTimeString;
+    }
+
+    @JsonIgnore
+    public LocalDateTime getDateTime() {
+        if (dateTime == null && dateTimeString != null) {
+            dateTime = LocalDateTime.parse(dateTimeString, FORMATTER);
+        }
+        return dateTime;
     }
 
     public String showInfo() {

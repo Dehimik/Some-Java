@@ -102,7 +102,7 @@ public class AddSession extends JDialog {
                     session.getCoach().getName(),
                     session.getClientsNames(),
                     session.getSpecialization().getDescription(),
-                    session.getFormattedDateTime()
+                    session.getFormattedDate()
             });
         }
     }

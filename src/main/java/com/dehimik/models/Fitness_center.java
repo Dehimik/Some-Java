@@ -135,6 +135,7 @@ public class Fitness_center {
     }
 
     public void loadSessions() {
+        loadClients();
         sessions = loadFromJson(SESSIONS_FILE, Session.class);
     }
 

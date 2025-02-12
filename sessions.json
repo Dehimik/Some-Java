@@ -1,0 +1,41 @@
+[ {
+  "coach" : {
+    "name" : "Vova",
+    "specialization" : "BODYBUILDING"
+  },
+  "specialization" : "BODYBUILDING",
+  "formattedDateTime" : "27.03.2025 18:00",
+  "clientsNames" : "Vlad, Vadim, Ilona",
+  "formattedDate" : "27.03.2025 18:00",
+  "dateTime" : "27.03.2025 18:00"
+}, {
+  "coach" : {
+    "name" : "Sasha",
+    "specialization" : "CROSSFIT"
+  },
+  "specialization" : "CROSSFIT",
+  "formattedDateTime" : "25.02.2025 19:30",
+  "clientsNames" : "Vova",
+  "formattedDate" : "25.02.2025 19:30",
+  "dateTime" : "25.02.2025 19:30"
+}, {
+  "coach" : {
+    "name" : "Kristina",
+    "specialization" : "FITNESS"
+  },
+  "specialization" : "YOGA",
+  "formattedDateTime" : "16.02.2025 16:00",
+  "clientsNames" : "Ilona",
+  "formattedDate" : "16.02.2025 16:00",
+  "dateTime" : "16.02.2025 16:00"
+}, {
+  "coach" : {
+    "name" : "Dima",
+    "specialization" : "BOXING"
+  },
+  "specialization" : "BOXING",
+  "formattedDateTime" : "02.03.2025 17:00",
+  "clientsNames" : "Vlad, Vova",
+  "formattedDate" : "02.03.2025 17:00",
+  "dateTime" : "02.03.2025 17:00"
+} ]
