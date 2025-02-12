@@ -1,0 +1,16 @@
+[ {
+  "name" : "Sasha",
+  "specialization" : "CROSSFIT"
+}, {
+  "name" : "Dima",
+  "specialization" : "BOXING"
+}, {
+  "name" : "Maxim",
+  "specialization" : "BODYBUILDING"
+}, {
+  "name" : "Kristina",
+  "specialization" : "FITNESS"
+}, {
+  "name" : "Vova",
+  "specialization" : "BODYBUILDING"
+} ]

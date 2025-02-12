@@ -13,17 +13,19 @@ public class Fitness_center {
     private List<Coach> coaches;
     private List<Session> sessions;
     private FinanceManager financeManager;
+    private List<Equipment> equipmentList;
 
     private static final String CLIENTS_FILE = "clients.json";
     private static final String COACHES_FILE = "coaches.json";
     private static final String SESSIONS_FILE = "sessions.json";
-    private static final String EQUIPMENTS_FILE = "sessions.json";
-    private static final String FINANCE_FILE = "sessions.json";
+    private static final String EQUIPMENTS_FILE = "equipments.json";
+    private static final String FINANCE_FILE = "finance.json";
 
     public Fitness_center() {
         this.clients = new ArrayList<>();
         this.coaches = new ArrayList<>();
         this.sessions = new ArrayList<>();
+        this.equipmentList = new ArrayList<>();
         this.financeManager = new FinanceManager();
     }
 
@@ -42,6 +44,7 @@ public class Fitness_center {
 
     public void addEquipment(String name, int price, int quantity) {
         Equipment equipment = new Equipment(name, price, quantity);
+        equipmentList.add(equipment);
         financeManager.addEquipment(equipment);
     }
 
@@ -55,6 +58,14 @@ public class Fitness_center {
 
     public List<Coach> getCoaches(){
         return coaches;
+    }
+
+    public List<Session> getSessions() {
+        return sessions;
+    }
+
+    public List<Equipment> getEquipmentList() {
+        return equipmentList;
     }
 
     public String showAllSessions() {
@@ -125,6 +136,14 @@ public class Fitness_center {
 
     public void loadSessions() {
         sessions = loadFromJson(SESSIONS_FILE, Session.class);
+    }
+
+    public void saveEquipment() {
+        saveToJson(EQUIPMENTS_FILE, equipmentList);
+    }
+
+    public void loadEquipment() {
+        equipmentList = loadFromJson(EQUIPMENTS_FILE, Equipment.class);
     }
 
     private <T> void saveToJson(String fileName, List<T> list) {

@@ -5,6 +5,9 @@ public class Equipment {
     private String name;
     private int price;
     private int quantity;
+    private int totalCost;
+
+    public Equipment() { }
 
     public Equipment(String name, int price, int quantity) {
         this.name = name;

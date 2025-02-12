@@ -1,0 +1,26 @@
+[ {
+  "name" : "Bench",
+  "price" : 10,
+  "quantity" : 150,
+  "totalCost" : 1500
+}, {
+  "name" : "Fingerboard",
+  "price" : 120,
+  "quantity" : 3,
+  "totalCost" : 360
+}, {
+  "name" : "Dumbbell",
+  "price" : 20,
+  "quantity" : 6,
+  "totalCost" : 120
+}, {
+  "name" : "Ikra",
+  "price" : 400,
+  "quantity" : 2,
+  "totalCost" : 800
+}, {
+  "name" : "Squat",
+  "price" : 650,
+  "quantity" : 2,
+  "totalCost" : 1300
+} ]

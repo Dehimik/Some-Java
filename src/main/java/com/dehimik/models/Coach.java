@@ -25,4 +25,9 @@ public class Coach extends Person {
     public String showInfo() {
         return "Coach: " + name + ", Specialization: " + specialization;
     }
+
+    @Override
+    public String toString() {
+        return name + " (" + specialization.getDescription() + ")";
+    }
 }

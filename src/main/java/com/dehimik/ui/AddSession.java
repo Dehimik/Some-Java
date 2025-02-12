@@ -1,83 +1,109 @@
 package com.dehimik.ui;
+
+import com.dehimik.models.Fitness_center;
+import com.dehimik.models.Session;
+import com.dehimik.models.Coach;
+import com.dehimik.models.Client;
+import com.dehimik.enumes.Specialization;
+
 import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
 import java.util.List;
-import com.dehimik.models.*;
-import com.dehimik.enumes.*;
 
 public class AddSession extends JDialog {
-    private JComboBox<Coach>coachBox;
-    private JList<Client> clientList;
-    private JComboBox<Specialization> specializationBox;
-    private JTextField dateTimeField;
-    private JButton addButton, cancelButton;
     private Fitness_center fitnessCenter;
+    private JTable sessionTable;
+    private DefaultTableModel tableModel;
 
     public AddSession(JFrame parent, Fitness_center fitnessCenter) {
-        super(parent, "Add session", true);
+        super(parent, "Session Manager", true);
         this.fitnessCenter = fitnessCenter;
+        setSize(600, 400);
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        setLayout(new BorderLayout());
 
-        setSize(400, 200);
-        setLayout(new GridLayout(5, 2));
+        // Створюємо таблицю для занять
+        tableModel = new DefaultTableModel(new Object[]{"Coach", "Clients", "Specialization", "Date"}, 0);
+        sessionTable = new JTable(tableModel);
+        updateTable();
 
-        coachBox = new JComboBox<>(fitnessCenter.getCoaches().toArray(new Coach[0]));
+        // Додаємо таблицю у вікно
+        add(new JScrollPane(sessionTable), BorderLayout.CENTER);
 
-        clientList = new JList<>(fitnessCenter.getClients().toArray(new Client[0]));
-        clientList.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
-        JScrollPane clientScrollPane = new JScrollPane(clientList);
+        // Панель кнопок
+        JPanel buttonPanel = new JPanel();
+        JButton addSessionButton = new JButton("Add Session");
+        JButton saveSessionButton = new JButton("Save sessions");
+        JButton loadSessionButton = new JButton("Load sessions");
+        JButton refreshButton = new JButton("Refresh List");
 
-        specializationBox = new JComboBox<>(Specialization.values());
+        buttonPanel.add(addSessionButton);
+        buttonPanel.add(saveSessionButton);
+        buttonPanel.add(loadSessionButton);
+        buttonPanel.add(refreshButton);
+        add(buttonPanel, BorderLayout.SOUTH);
 
-        dateTimeField = new JTextField("dd.MM.yyyy HH:mm");
+        // Обробник натискання "Add Session"
+        addSessionButton.addActionListener(e -> addSessionDialog());
 
-        addButton = new JButton("Add");
-        cancelButton = new JButton("Cancel");
+        saveSessionButton.addActionListener(e -> fitnessCenter.saveSessions());
+        loadSessionButton.addActionListener(e -> fitnessCenter.loadSessions());
 
-        add(new JLabel("Choose coach:"));
-        add(coachBox);
-        add(new JLabel("Choose clients:"));
-        add(clientScrollPane);
-        add(new JLabel("Choose specialization:"));
-        add(specializationBox);
-        add(new JLabel("Enter date and time:"));
-        add(dateTimeField);
-        add(addButton);
-        add(cancelButton);
+        // Оновлення таблиці
+        refreshButton.addActionListener(e -> updateTable());
 
-        addButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                addSession();
-            }
-        });
-
-        cancelButton.addActionListener(e -> dispose());
-
-        setLocationRelativeTo(parent);
+        setLocationRelativeTo(null);
         setVisible(true);
     }
 
-    private void addSession() {
-        Coach selectedCoach = (Coach) coachBox.getSelectedItem();
-        List<Client> selectedClients = clientList.getSelectedValuesList();
-        Specialization specialization = (Specialization) specializationBox.getSelectedItem();
+    private void addSessionDialog() {
+        JComboBox<Coach> coachBox = new JComboBox<>(fitnessCenter.getCoaches().toArray(new Coach[0]));
+        JList<Client> clientList = new JList<>(fitnessCenter.getClients().toArray(new Client[0]));
+        clientList.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
+        JScrollPane clientScrollPane = new JScrollPane(clientList);
+        JComboBox<Specialization> specializationBox = new JComboBox<>(Specialization.values());
+        JTextField dateTimeField = new JTextField("dd.MM.yyyy HH:mm");
 
-        try {
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm");
-            LocalDateTime dateTime = LocalDateTime.parse(dateTimeField.getText(), formatter);
+        JPanel panel = new JPanel(new GridLayout(5, 2));
+        panel.add(new JLabel("Choose coach:"));
+        panel.add(coachBox);
+        panel.add(new JLabel("Choose clients:"));
+        panel.add(clientScrollPane);
+        panel.add(new JLabel("Choose specialization:"));
+        panel.add(specializationBox);
+        panel.add(new JLabel("Enter date and time:"));
+        panel.add(dateTimeField);
 
-            fitnessCenter.addSession(new Session(selectedCoach, selectedClients, specialization, dateTime));
-            JOptionPane.showMessageDialog(this, "Session successfully added!", "Success", JOptionPane.INFORMATION_MESSAGE);
-            dispose(); // Закриваємо діалогове вікно після успішного додавання
-        } catch (Exception ex) {
-            JOptionPane.showMessageDialog(this, "Error with date format. Use format 'dd.MM.yyyy HH:mm'.",
-                    "Error", JOptionPane.ERROR_MESSAGE);
+        int result = JOptionPane.showConfirmDialog(this, panel, "Add session", JOptionPane.OK_CANCEL_OPTION);
+        if (result == JOptionPane.OK_OPTION) {
+            try {
+                Coach selectedCoach = (Coach) coachBox.getSelectedItem();
+                List<Client> selectedClients = clientList.getSelectedValuesList();
+                Specialization specialization = (Specialization) specializationBox.getSelectedItem();
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm");
+                LocalDateTime dateTime = LocalDateTime.parse(dateTimeField.getText(), formatter);
+
+                fitnessCenter.addSession(new Session(selectedCoach, selectedClients, specialization, dateTime));
+                updateTable();
+                JOptionPane.showMessageDialog(this, "Session successfully added!", "Success", JOptionPane.INFORMATION_MESSAGE);
+            } catch (Exception ex) {
+                JOptionPane.showMessageDialog(this, "Error: Invalid date format. Use 'dd.MM.yyyy HH:mm'.", "Error", JOptionPane.ERROR_MESSAGE);
+            }
+        }
+    }
+
+    private void updateTable() {
+        tableModel.setRowCount(0);
+        for (Session session : fitnessCenter.getSessions()) {
+            tableModel.addRow(new Object[]{
+                    session.getCoach().getName(),
+                    session.getClientsNames(),
+                    session.getSpecialization().getDescription(),
+                    session.getFormattedDateTime()
+            });
         }
     }
 }
-

@@ -13,6 +13,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 // Ігнорує невідомі поля (якщо вони з’являться у JSON)
 @JsonIgnoreProperties(ignoreUnknown = true)
@@ -31,6 +32,23 @@ public class Session implements Serializable {
         this.clients = clients;
         this.specialization = specialization;
         this.dateTime = dateTime;
+    }
+
+    public Coach getCoach() {
+        return coach;
+    }
+
+    public String getClientsNames() {
+        if (clients.isEmpty()) {
+            return "No clients";
+        }
+        return clients.stream()
+                .map(Client::getName)
+                .collect(Collectors.joining(", "));
+    }
+
+    public Specialization getSpecialization() {
+        return specialization;
     }
 
     public String getFormattedDateTime() {
