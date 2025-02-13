@@ -46,13 +46,11 @@ public class AddSession extends JDialog {
         buttonPanel.add(refreshButton);
         add(buttonPanel, BorderLayout.SOUTH);
 
-        // Обробник натискання "Add Session"
         addSessionButton.addActionListener(e -> addSessionDialog());
 
         saveSessionButton.addActionListener(e -> fitnessCenter.saveSessions());
         loadSessionButton.addActionListener(e -> fitnessCenter.loadSessions());
 
-        // Оновлення таблиці
         refreshButton.addActionListener(e -> updateTable());
 
         setLocationRelativeTo(null);

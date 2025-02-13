@@ -145,6 +145,9 @@ public class Fitness_center {
 
     public void loadEquipment() {
         equipmentList = loadFromJson(EQUIPMENTS_FILE, Equipment.class);
+        for(Equipment equip : equipmentList){
+            financeManager.addEquipment(equip);
+        }
     }
 
     private <T> void saveToJson(String fileName, List<T> list) {

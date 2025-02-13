@@ -7,6 +7,7 @@ import com.dehimik.models.Fitness_center;
 import com.dehimik.ui.AddSession;
 import com.dehimik.ui.CoachPage;
 import com.dehimik.ui.EquipmentPage;
+import com.dehimik.ui.FinancePage;
 import com.dehimik.utils.InputValidator;
 
 import javax.swing.*;
@@ -23,7 +24,7 @@ public class FitnessCenterSwing extends JFrame {
         fitnessCenter = new Fitness_center();
 
         setTitle("Fitness center");
-        setSize(750, 400);
+        setSize(880, 400);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLayout(new BorderLayout());
 
@@ -35,6 +36,7 @@ public class FitnessCenterSwing extends JFrame {
         JButton equipmentButton = new JButton("Equipment");
         JButton saveButton = new JButton("Save");
         JButton loadButton = new JButton("Load");
+        JButton financeReport = new JButton("Finance report");
         JButton searchButton = new JButton("Search client");
 
         topPanel.add(addClientButton);
@@ -44,6 +46,7 @@ public class FitnessCenterSwing extends JFrame {
         topPanel.add(equipmentButton);
         topPanel.add(saveButton);
         topPanel.add(loadButton);
+        topPanel.add(financeReport);
         topPanel.add(searchButton);
 
         add(topPanel, BorderLayout.NORTH);
@@ -75,6 +78,7 @@ public class FitnessCenterSwing extends JFrame {
         equipmentButton.addActionListener(e -> new EquipmentPage(this, fitnessCenter));
         saveButton.addActionListener(e -> fitnessCenter.saveClients());
         loadButton.addActionListener(e -> fitnessCenter.loadClients());
+        financeReport.addActionListener(e -> new FinancePage(this, fitnessCenter));
         searchButton.addActionListener(e -> searchClient());
     }
 
